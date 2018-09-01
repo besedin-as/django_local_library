@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}result{% endblock %}
+
+{% block script %}
+    <script>
+
+        function changeColor(tag, color) {
+            $('.row').find('span').each(function(key, val){
+            var title = $(val).attr('title');
+            if (title === tag){
+	            $(val).css('background-color', color);
+            }
+            else {
+                $(val).css('background-color', '#f2f2f2');
+            }
+            });
+        }
+
+    </script>
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        {% for tag in tags %}
+          <div class="col-sm-1">
+            <div class="form-group">
+                <button type="submit" id="{{ tag.tag }}" onclick="changeColor('{{ tag.tag }}', '{{ tag.color }}')" class="btn-sm" style='background-color: {{ tag.color }}'>{{ tag.tag }}</button>
+            </div>
+          </div>
+        {% endfor %}
+    </div>
+
+
+    {% for dict in dicti %}
+        <span style="font-size: 118%" title="{{ dict.tag }}">{{ dict.token }}</span>
+    {% endfor %}
+
+{% endblock %}

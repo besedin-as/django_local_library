@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}add text{% endblock %}
+
+{% block content %}
+
+    <script>
+        function addText() {
+            var text = document.getElementById("my-select").value;
+            $('#exampleFormControlTextarea1').val(text);
+        }
+    </script>
+
+    <p><select id='my-select' onchange="addText()" size="1">
+        <option value="">Выберите текст</option>
+        {% for text in texts %}
+            <option value="{{ text.text }}">{{ text.title }}</option>
+        {% endfor %}
+    </select></p>
+
+    <form class="form-horizontal" action="{% url 'add_text' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Вставьте текст</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" style="resize: none" name="text" rows="15"></textarea>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-default">Отправить</button>
+        </div>
+    </form>
+    {% for dict in dicti %}
+        <br>{{ dict.token }} -- {{ dict.tag }}
+    {% endfor %}
+
+{% endblock %}
